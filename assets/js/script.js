@@ -34,24 +34,12 @@ $(function () {
 
   }
   
-
-// select  text area and compare the current block by comparing the id to the current hour//
-//$ ("textarea").each(function () {
-  //var textAreaNumber = parseInt($(this).attr("id"));
-
- // if(currentHour > textAreaNumber) {
-   // $(this).addClass("past");
- // } else if (currentHour < textAreaNumber) {
-  //  $(this).addClass("future");
- // } else {
-  //  $(this).addClass("present");
-  //}
-//});
-        // print storage  data func//
-  for (let i = 0; i < localStorage.length; i++) {
-   var key = localStorage.key(1);
-   var value = JSON.parse(localStorage.getItem(key));
-   $("#" + key).val(value.text);   
+    // print storage  data func and loop through key names//     
+   for (let i = 0; i < localStorage.length; i++) {
+   var key = localStorage.key(i);
+   var value = localStorage.getItem(key);
+   // value into the web page //
+   $("id" + key).val(value.text);   
   };
       // save event / function //
   function saveEvent(event){
@@ -61,7 +49,8 @@ $(function () {
 
   alert(textArea.val() +" "+ parentId)
 
-    localStorage.setItem(parentId, textArea.val())
+  localStorage.setItem(parentId, textArea.val())
+  
 
   }
 
