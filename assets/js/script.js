@@ -1,60 +1,56 @@
-// code to display the current date in the header of the page//
-$(function () {
+// Display today's day and date
+var todayDate = moment().format('dddd, MMM D YYYY, HH:mm');
+$("#currentDay").html(todayDate);
 
-  var currentDayEl=$("#currentDay")
-  var currentDayTime=dayjs().format("dddd, MMMM D YYYY, HH:mm")
-  var saveBtn= $(".saveBtn")
+$(document).ready(function () {
+    // saveBtn function event  //
+    $(".saveBtn").on("click", function () {
+      
+        var text = $(this).siblings(".description").val();
+        var time = $(this).parent().attr("id");
 
-  console.log(currentDayTime)
+        // save values in localstorage // 
+        localStorage.setItem(time, text);
+    })
+   
+    function timeTracker() {
+      
+        var timeNow = moment().hour();
 
-  currentDayEl.text(currentDayTime)
-  // military time var //
-  var currentHour= dayjs().hour()
+        //  function to loop over time block
+        $(".time-block").each(function () {
+            var blockTime = parseInt($(this).attr("id").split("hour")[1]);
 
-  console.log(currentHour)
-// 1.create loop to get all the time bloks ID's startting from 9am
- // 2. compare the i with the current hour
-  for (let i = 9; i < 18; i++) {
-    var timeBlock=$("#hour-"+i)
-    var event= localStorage.getItem("hour-"+i)
+            // check time and add classes for past, present or future indicators //
+            if (blockTime < timeNow) {
+                $(this).removeClass("future");
+                $(this).removeClass("present");
+                $(this).addClass("past");
+            }
+            else if (blockTime === timeNow) {
+                $(this).removeClass("past");
+                $(this).removeClass("future");
+                $(this).addClass("present");
+            }
+            else {
+                $(this).removeClass("present");
+                $(this).removeClass("past");
+                $(this).addClass("future");
 
-    console.log(event)
-
-    
-  if(i===currentHour){
-
-    timeBlock.addClass("present")
-  }
-  else if(currentHour > i){
-    timeBlock.addClass("past")
+            }
+        })
     }
-    else{
-      timeBlock.addClass("future")
-    }
 
-  }
-  
-    // print storage  data func and loop through key names//     
-   for (let i = 0; i < localStorage.length; i++) {
-   var key = localStorage.key(i);
-   var value = localStorage.getItem(key);
-   // value into the web page //
-   $("id" + key).val(value.text);   
-  };
-      // save event / function //
-  function saveEvent(event){
-    var currentButton=$(event.target)
-    var textArea= currentButton.siblings("textarea")
-    var parentId= currentButton.parent().attr("id")
+    // loop and Get value from local storage keys//
+    $("#hour9 .description").val(localStorage.getItem("hour9"));
+    $("#hour10 .description").val(localStorage.getItem("hour10"));
+    $("#hour11 .description").val(localStorage.getItem("hour11"));
+    $("#hour12 .description").val(localStorage.getItem("hour12"));
+    $("#hour13 .description").val(localStorage.getItem("hour13"));
+    $("#hour14 .description").val(localStorage.getItem("hour14"));
+    $("#hour15 .description").val(localStorage.getItem("hour15"));
+    $("#hour16 .description").val(localStorage.getItem("hour16"));
+    $("#hour17 .description").val(localStorage.getItem("hour17"));
 
-  alert(textArea.val() +" "+ parentId)
-
-  localStorage.setItem(parentId, textArea.val())
-  
-
-  }
-
-  saveBtn.on("click", saveEvent)
-
-
-});
+    timeTracker();
+})

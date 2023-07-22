@@ -11,4 +11,4 @@ In order to use it, just type the activity you want to add on the planner for yo
 Documentation from jquery.com was used in order to make ir responsive and make the input and retrieve from local storage possible.
 
 ## License
-MIT
+[MIT](https://choosealicense.com/licenses/mit/)
